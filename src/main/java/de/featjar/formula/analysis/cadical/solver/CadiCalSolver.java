@@ -87,21 +87,17 @@ public class CadiCalSolver implements ISolver {
         if (lines.isEmpty()) {
             throw new RuntimeException("Not output from solver");
         }
-        if (lines.size() > 2) {
-            throw new RuntimeException(String.format("Could not parse: %s", String.join("\n", lines)));
-        }
         String satResult = lines.get(0);
         switch (satResult) {
             case "s SATISFIABLE":
                 if (lines.size() < 2) {
                     throw new RuntimeException("Solver did not provide solution");
                 }
-                String[] split = lines.get(1).split(" ");
-                return new BooleanSolution(Arrays.stream(split)
+                return new BooleanSolution(lines.stream()
                         .skip(1)
-                        .limit(split.length - 2) // do not use leading "v"
-                        // and tailing "0"
-                        .mapToInt(Integer::parseInt)
+                        .map(l -> l.split(" "))
+                        .flatMapToInt(s -> Arrays.stream(s).skip(1).mapToInt(Integer::parseInt))
+                        .filter(v -> v != 0)
                         .toArray());
             case "c UNKNOWN":
                 isTimeoutOccurred = true;
@@ -158,7 +154,7 @@ public class CadiCalSolver implements ISolver {
         CadiBackBinary extension = FeatJAR.extension(CadiBackBinary.class);
         try (TempFile tempFile = new TempFile("cadiBackInput", ".dimacs")) {
             IO.save(formula, tempFile.getPath(), new FormulaDimacsFormat());
-            Process process = extension.getProcess(("-q"), tempFile.getPath().toString());
+            Process process = extension.getProcess("-q", tempFile.getPath().toString());
 
             return process.get().map(this::parseCore);
         } catch (Exception e) {
