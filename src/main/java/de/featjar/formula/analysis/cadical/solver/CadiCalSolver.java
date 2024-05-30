@@ -22,6 +22,7 @@ package de.featjar.formula.analysis.cadical.solver;
 
 import de.featjar.base.FeatJAR;
 import de.featjar.base.data.Result;
+import de.featjar.base.data.Void;
 import de.featjar.base.env.Process;
 import de.featjar.base.env.TempFile;
 import de.featjar.base.io.IO;
@@ -33,6 +34,7 @@ import de.featjar.formula.analysis.bool.BooleanSolution;
 import de.featjar.formula.io.dimacs.FormulaDimacsFormat;
 import de.featjar.formula.structure.formula.IFormula;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -152,11 +154,11 @@ public class CadiCalSolver implements ISolver {
     public Result<BooleanAssignment> core() {
         // TODO implement timeout
         CadiBackBinary extension = FeatJAR.extension(CadiBackBinary.class);
-        try (TempFile tempFile = new TempFile("cadiBackInput", ".dimacs")) {
-            IO.save(formula, tempFile.getPath(), new FormulaDimacsFormat());
-            Process process = extension.getProcess("-q", tempFile.getPath().toString());
-
-            return process.get().map(this::parseCore);
+        try {
+            Process process = extension.getProcess("-q");
+            List<String> output = new ArrayList<>();
+            Result<Void> result = process.run(IO.print(formula, new FormulaDimacsFormat()), output::add, output::add);
+            return result.map(r -> parseCore(output));
         } catch (Exception e) {
             FeatJAR.log().error(e);
             return Result.empty(e);
