@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<extensions>
+	<point id="de.featjar.base.cli.Commands">
+		<extension id="de.featjar.analysis.cadical.cli.CoreCommand" />
+		<extension id="de.featjar.analysis.cadical.cli.SolutionCommand" />
+	</point>
+</extensions>
