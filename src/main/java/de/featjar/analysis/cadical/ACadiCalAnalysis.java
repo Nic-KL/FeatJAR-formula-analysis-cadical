@@ -18,15 +18,15 @@
  *
  * See <https://github.com/FeatureIDE/FeatJAR-formula-analysis-cadical> for further information.
  */
-package de.featjar.formula.analysis.cadical;
+package de.featjar.analysis.cadical;
 
+import de.featjar.analysis.cadical.solver.CadiCalSolver;
 import de.featjar.base.FeatJAR;
 import de.featjar.base.computation.AComputation;
 import de.featjar.base.computation.Computations;
 import de.featjar.base.computation.Dependency;
 import de.featjar.base.computation.IComputation;
-import de.featjar.formula.analysis.cadical.solver.CadiCalSolver;
-import de.featjar.formula.structure.formula.IFormula;
+import de.featjar.formula.structure.IFormula;
 import java.time.Duration;
 import java.util.List;
 

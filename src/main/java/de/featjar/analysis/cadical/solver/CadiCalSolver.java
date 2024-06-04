@@ -18,8 +18,9 @@
  *
  * See <https://github.com/FeatureIDE/FeatJAR-formula-analysis-cadical> for further information.
  */
-package de.featjar.formula.analysis.cadical.solver;
+package de.featjar.analysis.cadical.solver;
 
+import de.featjar.analysis.ISolver;
 import de.featjar.base.FeatJAR;
 import de.featjar.base.data.Result;
 import de.featjar.base.data.Void;
@@ -28,11 +29,10 @@ import de.featjar.base.env.TempFile;
 import de.featjar.base.io.IO;
 import de.featjar.bin.cadical.CadiBackBinary;
 import de.featjar.bin.cadical.CadiCalBinary;
-import de.featjar.formula.analysis.ISolver;
-import de.featjar.formula.analysis.bool.BooleanAssignment;
-import de.featjar.formula.analysis.bool.BooleanSolution;
+import de.featjar.formula.assignment.BooleanAssignment;
+import de.featjar.formula.assignment.BooleanSolution;
 import de.featjar.formula.io.dimacs.FormulaDimacsFormat;
-import de.featjar.formula.structure.formula.IFormula;
+import de.featjar.formula.structure.IFormula;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;

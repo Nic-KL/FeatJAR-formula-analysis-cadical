@@ -18,22 +18,22 @@
  *
  * See <https://github.com/FeatureIDE/FeatJAR-formula-analysis-cadical> for further information.
  */
-package de.featjar.analysis.sharpsat.solver;
+package de.featjar.analysis.cadical.solver;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import de.featjar.Common;
+import de.featjar.analysis.cadical.ComputeGetSolutionCadiCal;
 import de.featjar.base.computation.Computations;
 import de.featjar.base.data.Result;
-import de.featjar.formula.analysis.bool.BooleanSolution;
-import de.featjar.formula.analysis.cadical.ComputeGetSolutionCadiCal;
+import de.featjar.formula.assignment.BooleanSolution;
 import de.featjar.formula.structure.Expressions;
-import de.featjar.formula.structure.formula.IFormula;
-import de.featjar.formula.structure.formula.connective.And;
-import de.featjar.formula.structure.formula.connective.BiImplies;
-import de.featjar.formula.structure.formula.connective.Implies;
-import de.featjar.formula.structure.formula.connective.Or;
-import de.featjar.formula.structure.formula.predicate.Literal;
+import de.featjar.formula.structure.IFormula;
+import de.featjar.formula.structure.connective.And;
+import de.featjar.formula.structure.connective.BiImplies;
+import de.featjar.formula.structure.connective.Implies;
+import de.featjar.formula.structure.connective.Or;
+import de.featjar.formula.structure.predicate.Literal;
 import org.junit.jupiter.api.Test;
 
 public class CadiCalSolverTest extends Common {
