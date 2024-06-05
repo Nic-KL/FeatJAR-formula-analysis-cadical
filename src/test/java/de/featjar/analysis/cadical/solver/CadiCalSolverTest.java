@@ -23,7 +23,7 @@ package de.featjar.analysis.cadical.solver;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import de.featjar.Common;
-import de.featjar.analysis.cadical.ComputeGetSolutionCadiCal;
+import de.featjar.analysis.cadical.computation.ComputeGetSolutionCadiCal;
 import de.featjar.base.computation.Computations;
 import de.featjar.base.data.Result;
 import de.featjar.formula.assignment.BooleanSolution;

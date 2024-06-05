@@ -18,27 +18,26 @@
  *
  * See <https://github.com/FeatureIDE/FeatJAR-formula-analysis-cadical> for further information.
  */
-package de.featjar.analysis.cadical;
+package de.featjar.analysis.cadical.computation;
 
 import de.featjar.base.computation.IComputation;
 import de.featjar.base.computation.Progress;
 import de.featjar.base.data.Result;
-import de.featjar.formula.assignment.BooleanAssignment;
 import de.featjar.formula.structure.IFormula;
 import java.util.List;
 
-public class ComputeCoreCadiCal extends ACadiCalAnalysis<BooleanAssignment> {
+public class ComputeHasSolutionCadiCal extends ACadiCalAnalysis<Boolean> {
 
-    public ComputeCoreCadiCal(IComputation<IFormula> cnfFormula) {
+    public ComputeHasSolutionCadiCal(IComputation<IFormula> cnfFormula) {
         super(cnfFormula);
     }
 
-    public ComputeCoreCadiCal(ComputeCoreCadiCal other) {
+    public ComputeHasSolutionCadiCal(ComputeHasSolutionCadiCal other) {
         super(other);
     }
 
     @Override
-    public Result<BooleanAssignment> compute(List<Object> dependencyList, Progress progress) {
-        return initializeSolver(dependencyList).core();
+    public Result<Boolean> compute(List<Object> dependencyList, Progress progress) {
+        return initializeSolver(dependencyList).hasSolution();
     }
 }

@@ -18,7 +18,7 @@
  *
  * See <https://github.com/FeatureIDE/FeatJAR-formula-analysis-cadical> for further information.
  */
-package de.featjar.analysis.cadical;
+package de.featjar.analysis.cadical.computation;
 
 import de.featjar.analysis.cadical.solver.CadiCalSolver;
 import de.featjar.base.FeatJAR;

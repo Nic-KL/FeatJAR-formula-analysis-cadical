@@ -20,7 +20,7 @@
  */
 package de.featjar.analysis.cadical.cli;
 
-import de.featjar.analysis.cadical.ComputeCoreCadiCal;
+import de.featjar.analysis.cadical.computation.ComputeCoreCadiCal;
 import de.featjar.base.computation.IComputation;
 import de.featjar.formula.assignment.BooleanAssignment;
 import de.featjar.formula.structure.IFormula;
