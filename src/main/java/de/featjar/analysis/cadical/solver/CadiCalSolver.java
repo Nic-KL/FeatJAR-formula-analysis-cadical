@@ -21,14 +21,14 @@
 package de.featjar.analysis.cadical.solver;
 
 import de.featjar.analysis.ISolver;
+import de.featjar.analysis.cadical.bin.CadiBackBinary;
+import de.featjar.analysis.cadical.bin.CadiCalBinary;
 import de.featjar.base.FeatJAR;
 import de.featjar.base.data.Result;
 import de.featjar.base.data.Void;
 import de.featjar.base.env.Process;
 import de.featjar.base.env.TempFile;
 import de.featjar.base.io.IO;
-import de.featjar.bin.cadical.CadiBackBinary;
-import de.featjar.bin.cadical.CadiCalBinary;
 import de.featjar.formula.assignment.BooleanAssignment;
 import de.featjar.formula.assignment.BooleanSolution;
 import de.featjar.formula.io.dimacs.FormulaDimacsFormat;

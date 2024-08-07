@@ -45,7 +45,7 @@ public abstract class ACadiCalAnalysis<T> extends AComputation<T> {
     public CadiCalSolver initializeSolver(List<Object> dependencyList) {
         IFormula formula = FORMULA.get(dependencyList);
         Duration timeout = TIMEOUT.get(dependencyList);
-        FeatJAR.log().debug("initializing SAT4J");
+        FeatJAR.log().debug("initializing cadical solver");
         FeatJAR.log().debug(formula);
         CadiCalSolver solver = new CadiCalSolver(formula);
         solver.setTimeout(timeout);

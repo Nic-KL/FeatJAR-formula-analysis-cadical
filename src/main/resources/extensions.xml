@@ -4,4 +4,8 @@
 		<extension id="de.featjar.analysis.cadical.cli.CoreCommand" />
 		<extension id="de.featjar.analysis.cadical.cli.SolutionCommand" />
 	</point>
+	<point id="de.featjar.base.env.Binaries">
+		<extension id="de.featjar.analysis.cadical.bin.CadiCalBinary" />
+		<extension id="de.featjar.analysis.cadical.bin.CadiBackBinary" />
+	</point>
 </extensions>
