@@ -21,6 +21,7 @@
 package de.featjar.analysis.cadical.solver;
 
 import de.featjar.analysis.ISolver;
+import de.featjar.analysis.RuntimeTimeoutException;
 import de.featjar.analysis.cadical.bin.CadiBackBinary;
 import de.featjar.analysis.cadical.bin.CadiCalBinary;
 import de.featjar.base.FeatJAR;
@@ -123,14 +124,14 @@ public class CadiCalSolver implements ISolver {
                     String.valueOf(timeout.toSeconds()),
                     tempFile.getPath().toString());
 
-            return process.get().map(this::parseSatisfiable);
+            return process.get().flatMap(this::parseSatisfiable);
         } catch (Exception e) {
             FeatJAR.log().error(e);
             return Result.empty(e);
         }
     }
 
-    private Boolean parseSatisfiable(List<String> lines) {
+    private Result<Boolean> parseSatisfiable(List<String> lines) {
         if (lines.isEmpty()) {
             throw new RuntimeException("Not output from solver");
         }
@@ -140,12 +141,12 @@ public class CadiCalSolver implements ISolver {
         String satResult = lines.get(0);
         switch (satResult) {
             case "s SATISFIABLE":
-                return Boolean.TRUE;
+                return Result.of(Boolean.TRUE);
             case "c UNKNOWN":
                 isTimeoutOccurred = true;
-                return null;
+                return Result.empty(new RuntimeTimeoutException());
             case "s UNSATISFIABLE":
-                return Boolean.FALSE;
+                return Result.of(Boolean.FALSE);
             default:
                 throw new RuntimeException(String.format("Could not parse: %s", String.join("\n", lines)));
         }

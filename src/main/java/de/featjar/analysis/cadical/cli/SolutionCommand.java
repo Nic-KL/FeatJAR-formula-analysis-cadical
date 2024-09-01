@@ -21,6 +21,7 @@
 package de.featjar.analysis.cadical.cli;
 
 import de.featjar.analysis.cadical.computation.ComputeGetSolutionCadiCal;
+import de.featjar.base.cli.OptionList;
 import de.featjar.base.computation.IComputation;
 import de.featjar.formula.assignment.BooleanAssignment;
 import de.featjar.formula.assignment.BooleanSolution;
@@ -35,7 +36,7 @@ public class SolutionCommand extends ACadicalAnalysisCommand<BooleanSolution, Bo
     }
 
     @Override
-    public IComputation<BooleanSolution> newAnalysis(IComputation<IFormula> formula) {
+    public IComputation<BooleanSolution> newAnalysis(OptionList optionParser, IComputation<IFormula> formula) {
         return formula.map(ComputeGetSolutionCadiCal::new);
     }
 
