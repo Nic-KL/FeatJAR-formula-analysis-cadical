@@ -23,12 +23,12 @@ package de.featjar.analysis.cadical.computation;
 import de.featjar.base.computation.IComputation;
 import de.featjar.base.computation.Progress;
 import de.featjar.base.data.Result;
+import de.featjar.formula.assignment.BooleanAssignmentList;
 import de.featjar.formula.assignment.BooleanSolution;
-import de.featjar.formula.structure.IFormula;
 import java.util.List;
 
 public class ComputeGetSolutionCadiCal extends ACadiCalAnalysis<BooleanSolution> {
-    public ComputeGetSolutionCadiCal(IComputation<IFormula> cnfFormula) {
+    public ComputeGetSolutionCadiCal(IComputation<BooleanAssignmentList> cnfFormula) {
         super(cnfFormula);
     }
 

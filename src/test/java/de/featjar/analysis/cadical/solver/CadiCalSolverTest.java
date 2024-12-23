@@ -27,6 +27,9 @@ import de.featjar.analysis.cadical.computation.ComputeGetSolutionCadiCal;
 import de.featjar.base.computation.Computations;
 import de.featjar.base.data.Result;
 import de.featjar.formula.assignment.BooleanSolution;
+import de.featjar.formula.assignment.ComputeBooleanClauseList;
+import de.featjar.formula.computation.ComputeCNFFormula;
+import de.featjar.formula.computation.ComputeNNFFormula;
 import de.featjar.formula.structure.Expressions;
 import de.featjar.formula.structure.IFormula;
 import de.featjar.formula.structure.connective.And;
@@ -61,8 +64,12 @@ public class CadiCalSolverTest extends Common {
 
     private void checkSolution(final IFormula formula, int count) {
         IFormula cnf = formula.toCNF().orElseThrow();
-        final Result<BooleanSolution> result =
-                Computations.of(cnf).map(ComputeGetSolutionCadiCal::new).computeResult();
+        final Result<BooleanSolution> result = Computations.of(formula)
+                .map(ComputeNNFFormula::new)
+                .map(ComputeCNFFormula::new)
+                .map(ComputeBooleanClauseList::new)
+                .map(ComputeGetSolutionCadiCal::new)
+                .computeResult();
         assertTrue(result.isPresent(), result::printProblems);
         // TODO implement compare
     }

@@ -24,7 +24,7 @@ import de.featjar.analysis.cadical.computation.ComputeCoreCadiCal;
 import de.featjar.base.cli.OptionList;
 import de.featjar.base.computation.IComputation;
 import de.featjar.formula.assignment.BooleanAssignment;
-import de.featjar.formula.structure.IFormula;
+import de.featjar.formula.assignment.BooleanAssignmentList;
 import java.util.Optional;
 
 public class CoreCommand extends ACadicalAnalysisCommand<BooleanAssignment, BooleanAssignment> {
@@ -35,7 +35,8 @@ public class CoreCommand extends ACadicalAnalysisCommand<BooleanAssignment, Bool
     }
 
     @Override
-    public IComputation<BooleanAssignment> newAnalysis(OptionList optionParser, IComputation<IFormula> formula) {
+    public IComputation<BooleanAssignment> newAnalysis(
+            OptionList optionParser, IComputation<BooleanAssignmentList> formula) {
         return formula.map(ComputeCoreCadiCal::new);
     }
 

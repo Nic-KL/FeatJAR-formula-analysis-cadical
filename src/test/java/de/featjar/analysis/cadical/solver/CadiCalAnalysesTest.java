@@ -23,18 +23,18 @@ package de.featjar.analysis.cadical.solver;
 import de.featjar.AnalysisTest;
 import de.featjar.analysis.cadical.computation.ComputeCoreCadiCal;
 import de.featjar.analysis.cadical.computation.ComputeGetSolutionCadiCal;
-import de.featjar.formula.assignment.ComputeFormulaVariableMap;
+import de.featjar.formula.assignment.ComputeBooleanClauseList;
 import org.junit.jupiter.api.Test;
 
 public class CadiCalAnalysesTest extends AnalysisTest {
 
     @Test
     void coreIsCorrectlyComputed() {
-        testCore(ComputeFormulaVariableMap::new, ComputeCoreCadiCal::new);
+        testCore(ComputeBooleanClauseList::new, ComputeCoreCadiCal::new);
     }
 
     @Test
     void computedSolutionIsSatisfying() {
-        testSolution(ComputeFormulaVariableMap::new, ComputeGetSolutionCadiCal::new);
+        testSolution(ComputeBooleanClauseList::new, ComputeGetSolutionCadiCal::new);
     }
 }

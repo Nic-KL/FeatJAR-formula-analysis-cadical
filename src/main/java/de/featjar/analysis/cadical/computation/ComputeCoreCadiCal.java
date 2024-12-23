@@ -24,12 +24,12 @@ import de.featjar.base.computation.IComputation;
 import de.featjar.base.computation.Progress;
 import de.featjar.base.data.Result;
 import de.featjar.formula.assignment.BooleanAssignment;
-import de.featjar.formula.structure.IFormula;
+import de.featjar.formula.assignment.BooleanAssignmentList;
 import java.util.List;
 
 public class ComputeCoreCadiCal extends ACadiCalAnalysis<BooleanAssignment> {
 
-    public ComputeCoreCadiCal(IComputation<IFormula> cnfFormula) {
+    public ComputeCoreCadiCal(IComputation<BooleanAssignmentList> cnfFormula) {
         super(cnfFormula);
     }
 

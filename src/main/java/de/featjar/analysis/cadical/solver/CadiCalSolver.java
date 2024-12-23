@@ -31,9 +31,10 @@ import de.featjar.base.env.Process;
 import de.featjar.base.env.TempFile;
 import de.featjar.base.io.IO;
 import de.featjar.formula.assignment.BooleanAssignment;
+import de.featjar.formula.assignment.BooleanAssignmentGroups;
+import de.featjar.formula.assignment.BooleanAssignmentList;
 import de.featjar.formula.assignment.BooleanSolution;
-import de.featjar.formula.io.dimacs.FormulaDimacsFormat;
-import de.featjar.formula.structure.IFormula;
+import de.featjar.formula.io.dimacs.BooleanAssignmentGroupsDimacsFormat;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,15 +42,15 @@ import java.util.List;
 import java.util.Objects;
 
 public class CadiCalSolver implements ISolver {
-    protected final IFormula formula;
+    protected final BooleanAssignmentList formula;
     protected Duration timeout = Duration.ZERO;
     protected boolean isTimeoutOccurred;
 
-    public CadiCalSolver(IFormula formula) { // todo: use boolean clause list input
+    public CadiCalSolver(BooleanAssignmentList formula) { // todo: use boolean clause list input
         this.formula = formula;
     }
 
-    public IFormula getFormula() {
+    public BooleanAssignmentList getFormula() {
         return formula;
     }
 
@@ -71,7 +72,10 @@ public class CadiCalSolver implements ISolver {
         isTimeoutOccurred = false;
         CadiCalBinary extension = FeatJAR.extension(CadiCalBinary.class);
         try (TempFile tempFile = new TempFile("cadiCalInput", ".dimacs")) {
-            IO.save(formula, tempFile.getPath(), new FormulaDimacsFormat());
+            IO.save(
+                    new BooleanAssignmentGroups(formula),
+                    tempFile.getPath(),
+                    new BooleanAssignmentGroupsDimacsFormat());
             Process process = extension.getProcess(
                     "--sat",
                     "-q",
@@ -116,7 +120,10 @@ public class CadiCalSolver implements ISolver {
         isTimeoutOccurred = false;
         CadiCalBinary extension = FeatJAR.extension(CadiCalBinary.class);
         try (TempFile tempFile = new TempFile("cadiCalInput", ".dimacs")) {
-            IO.save(formula, tempFile.getPath(), new FormulaDimacsFormat());
+            IO.save(
+                    new BooleanAssignmentGroups(formula),
+                    tempFile.getPath(),
+                    new BooleanAssignmentGroupsDimacsFormat());
             Process process = extension.getProcess(
                     "--sat",
                     "-q",
@@ -158,7 +165,10 @@ public class CadiCalSolver implements ISolver {
         try {
             Process process = extension.getProcess("-q");
             List<String> output = new ArrayList<>();
-            Result<Void> result = process.run(IO.print(formula, new FormulaDimacsFormat()), output::add, output::add);
+            Result<Void> result = process.run(
+                    IO.print(new BooleanAssignmentGroups(formula), new BooleanAssignmentGroupsDimacsFormat()),
+                    output::add,
+                    output::add);
             return result.map(r -> parseCore(output));
         } catch (Exception e) {
             FeatJAR.log().error(e);
@@ -171,7 +181,11 @@ public class CadiCalSolver implements ISolver {
             throw new RuntimeException("Not output from solver");
         }
         if (lines.size() < 2) {
-            throw new RuntimeException(String.format("Could not parse: %s", String.join("\n", lines)));
+            if ("s UNSATISFIABLE".equals(lines.get(0))) {
+                return new BooleanAssignment();
+            } else {
+                throw new RuntimeException(String.format("Could not parse: %s", String.join("\n", lines)));
+            }
         }
         int[] core = new int[lines.size() - 2]; // ignore last two lines with "b 0" and SAT result
         for (int i = 0; i < lines.size() - 2; i++) {
