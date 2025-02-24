@@ -41,7 +41,7 @@ public class CoreCommand extends ACadicalAnalysisCommand<BooleanAssignment, Bool
     }
 
     @Override
-    public String serializeResult(BooleanAssignment assignment) {
+    public String printResult(BooleanAssignment assignment) {
         return assignment.print();
     }
 

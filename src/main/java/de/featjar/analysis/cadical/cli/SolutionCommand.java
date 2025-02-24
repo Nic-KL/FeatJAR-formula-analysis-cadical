@@ -42,7 +42,7 @@ public class SolutionCommand extends ACadicalAnalysisCommand<BooleanSolution, Bo
     }
 
     @Override
-    public String serializeResult(BooleanSolution assignment) {
+    public String printResult(BooleanSolution assignment) {
         return assignment.print();
     }
 
