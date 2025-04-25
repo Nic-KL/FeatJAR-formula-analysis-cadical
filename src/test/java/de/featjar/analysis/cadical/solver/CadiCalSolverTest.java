@@ -22,11 +22,15 @@ package de.featjar.analysis.cadical.solver;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+
 import de.featjar.Common;
 import de.featjar.analysis.cadical.computation.ComputeGetSolutionCadiCal;
 import de.featjar.base.FeatJAR;
 import de.featjar.base.computation.Computations;
+import de.featjar.base.data.Problem;
 import de.featjar.base.data.Result;
+import de.featjar.base.data.Problem.Severity;
 import de.featjar.formula.assignment.BooleanSolution;
 import de.featjar.formula.assignment.ComputeBooleanClauseList;
 import de.featjar.formula.computation.ComputeCNFFormula;
@@ -83,7 +87,8 @@ public class CadiCalSolverTest extends Common {
                 .map(ComputeBooleanClauseList::new)
                 .map(ComputeGetSolutionCadiCal::new)
                 .computeResult();
-        assertTrue(result.isPresent(), result::printProblems);
+        assertTrue(result.isPresent(), () ->
+        	result.getProblems().stream().filter(p -> p.getSeverity() == Severity.ERROR).findFirst().map(p1 -> p1.toString()).orElse(""));
         // TODO implement compare
     }
 }
